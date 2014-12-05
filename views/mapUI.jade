@@ -5,14 +5,63 @@ html
       | html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
     script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_IBIJe0fAh1ty7bLw5UwNlBbDl-7cbtc")
     script(type="text/javascript").
+      var map,
+          coord = function(lat, lon) {
+            return {lat: lat, lon: lon}
+          },
+          happyPeople = [
+            coord(12.967171, 77.594890),
+            coord(12.934465, 77.611328),
+            coord(12.936577, 77.610727),
+            coord(12.939087, 77.625061),
+            coord(12.938665, 77.580337),
+            coord(12.916413, 77.592353),
+            coord(12.914405, 77.599606)
+          ],
+          sadPeople = [
+            coord(12.909050, 77.622909),
+            coord(12.913777, 77.637715),
+            coord(12.920721, 77.641191),
+            coord(12.919215, 77.640762),
+            coord(12.921557, 77.640418),
+            coord(12.922059, 77.639989),
+            coord(12.921767, 77.637157)
+          ],
+          green = '#090',
+          red = '#900';
+
       function initialize() {
         var mapOptions = {
           center: { lat: 12.9667, lng: 77.5667},
           zoom: 12
         };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        addMarkers(happyPeople, green);
+        addMarkers(sadPeople, red);
       }
+
+      function addMarker(lat, lon, color) {
+        new google.maps.Marker({
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            strokeWeight: 0,
+            fillColor: color || green,
+            fillOpacity: 0.7,
+            scale: 3
+          },
+          position: new google.maps.LatLng(lat, lon),
+          map: map
+        });
+      }
+
+      function addMarkers(people, color) {
+        for(var i = 0; i < people.length; i++) {
+          var thisPerson = people[i];
+          addMarker(thisPerson.lat, thisPerson.lon, color || red)
+        }
+      }
+
       google.maps.event.addDomListener(window, 'load', initialize);
 
   body
