@@ -23,6 +23,9 @@ app.use(cookieParser());
 // Use JADE as the view engine
 app.set('view engine', 'jade');
 
+// Get the port
+app.set('port', (process.env.PORT || 5000));
+
 /******************************************************************************
   ROUTES
 ******************************************************************************/
@@ -33,5 +36,6 @@ app.get('/*', function(req, res, next) {
 /******************************************************************************
   YIPPEE! START THE SERVER!
 ******************************************************************************/
-app.listen(3000);
-console.log('Express server listening on port 3000');
+app.listen(app.get('port'), function() {
+  console.log('Express server listening on port %s', app.get('port'));
+});
