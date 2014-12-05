@@ -9,24 +9,6 @@ html
           coord = function(lat, lon) {
             return {lat: lat, lon: lon}
           },
-          happyPeople = [
-            coord(12.967171, 77.594890),
-            coord(12.934465, 77.611328),
-            coord(12.936577, 77.610727),
-            coord(12.939087, 77.625061),
-            coord(12.938665, 77.580337),
-            coord(12.916413, 77.592353),
-            coord(12.914405, 77.599606)
-          ],
-          sadPeople = [
-            coord(12.909050, 77.622909),
-            coord(12.913777, 77.637715),
-            coord(12.920721, 77.641191),
-            coord(12.919215, 77.640762),
-            coord(12.921557, 77.640418),
-            coord(12.922059, 77.639989),
-            coord(12.921767, 77.637157)
-          ],
           green = '#090',
           red = '#900';
 
@@ -64,5 +46,17 @@ html
 
       google.maps.event.addDomListener(window, 'load', initialize);
 
+    script(type="text/javascript")
+      != "var happyPeople = ["
+      each happyPerson, index in happyPeople
+        != "coord(" + happyPerson.coord + "),"
+      != "coord()"
+      != "];"
+
+      != "var sadPeople = ["
+      each sadPerson, index in sadPeople
+        != "coord(" + sadPerson.coord + "),"
+      != "coord()"
+      != "];"
   body
     div#map-canvas

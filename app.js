@@ -43,19 +43,17 @@ client.connect(function(err, client) {
   if(err) {
     return console.log('Error connecting to DB', err);
   }
-
-  var query = client.query('SELECT * FROM happyPeople');
-
-  query.on('row', function(row) {
-    console.log(JSON.stringify(row));
-  });
 });
 
 /******************************************************************************
   ROUTES
 ******************************************************************************/
 app.get('/', function(req, res, next) {
-  res.render('mapUI');
+  var query = client.query( 'SELECT * FROM happyPeople', function(e, happy) {
+    var query = client.query( 'SELECT * FROM sadPeople', function(e, sad) {
+      res.render('mapUI', {happyPeople: happy.rows, sadPeople: sad.rows});
+    });
+  });
 });
 
 app.get('/addPeople', function(req, res, next) {
@@ -63,8 +61,29 @@ app.get('/addPeople', function(req, res, next) {
 });
 
 app.post('/addPeople', function(req, res, next) {
-  var postData = req.body;
+  var postData = pD = req.body;
+
+  if(!pD.personType || !pD.lat || !pD.lon) {
+    return res.render('addPeople', {errorMessage: 'Hey! You have to fill everything in!', postData: pD});
+  }
+
+  if(['happyPeople', 'sadPeople'].indexOf(pD.personType) < 0) {
+    return res.render('addPeople', {errorMessage: 'We don\'t believe in people like that :o', postData: pD});
+  }
+
+  console.log(insertQuery(pD));
+
+  var query = client.query( insertQuery(pD), function(e, row) {
+    return res.render('addPeople', {successMessage: insertQuery(pD)});
+  });
 });
+
+/******************************************************************************
+  UTILITY FUNCTIONS
+******************************************************************************/
+function insertQuery(pD) {
+  return ['INSERT INTO ', pD.personType, ' (coord) VALUES (\'', pD.lat, ', ', pD.lon, '\');'].join('');
+}
 
 /******************************************************************************
   YIPPEE! START THE SERVER!

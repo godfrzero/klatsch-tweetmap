@@ -51,16 +51,27 @@ html
         margin-left: 20px;
       }
 
+      p.errorMessage, p.successMessage {
+        color: red;
+        text-align: center;
+      }
+
+      p.successMessage {
+        color: green;
+      }
+
   body
     form(method="POST")
       h2 Add New Coordinates
-      p These are the co-ordinates of a
+      p These are the coordinates of a
       label 
-        input(type="radio", name="personType", checked="checked")
+        input(type="radio", name="personType", checked="checked", value="happyPeople")
         |  Happy Person :D
       label.space-left
-        input(type="radio", name="personType")
+        input(type="radio", name="personType", value="sadPeople")
         |  Sad Person :'(
       input.form-control(type="text", name="lat", placeholder="Latitude")
       input.form-control(type="text", name="lon", placeholder="Longitude")
+      p.errorMessage= errorMessage || ''
+      p.successMessage= successMessage || ''
       button.btn.btn-primary(type="submit") Save!
