@@ -54,8 +54,16 @@ client.connect(function(err, client) {
 /******************************************************************************
   ROUTES
 ******************************************************************************/
-app.get('/*', function(req, res, next) {
+app.get('/', function(req, res, next) {
   res.render('mapUI');
+});
+
+app.get('/addPeople', function(req, res, next) {
+  res.render('addPeople');
+});
+
+app.post('/addPeople', function(req, res, next) {
+  var postData = req.body;
 });
 
 /******************************************************************************

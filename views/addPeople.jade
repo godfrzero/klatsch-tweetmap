@@ -1,0 +1,66 @@
+doctype html
+html
+  head
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
+    style(type="text/css").
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #EEE;
+      }
+
+      form {
+        padding: 20px;
+        font-weight: 200;
+        background: #FFF;
+        max-width: 400px;
+        margin: 50px auto 0;
+        border-radius: 10px;
+        border: solid thin rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+
+      input {
+        margin: 10px 0;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 30px;
+        font-weight: 200 !important;
+      }
+
+      h2 {
+        margin-top: 0;
+        font-weight: 100;
+        margin-bottom: 30px;
+      }
+
+      label {
+        cursor: pointer;
+        font-weight: inherit;
+      }
+
+      .space-left {
+        margin-left: 20px;
+      }
+
+  body
+    form(method="POST")
+      h2 Add New Coordinates
+      p These are the co-ordinates of a
+      label 
+        input(type="radio", name="personType", checked="checked")
+        |  Happy Person :D
+      label.space-left
+        input(type="radio", name="personType")
+        |  Sad Person :'(
+      input.form-control(type="text", name="lat", placeholder="Latitude")
+      input.form-control(type="text", name="lon", placeholder="Longitude")
+      button.btn.btn-primary(type="submit") Save!
